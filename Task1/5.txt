@@ -1,0 +1,3 @@
+All Books → BookGrid.tsx
+
+Featured Books → BookCard.tsx

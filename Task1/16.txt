@@ -1,0 +1,3 @@
+e public folder holds static assets that are served directly by the web server, such as images, icons, fonts, and files like favicon.ico. Anything in public can be accessed via a URL without being processed by the app’s code.
+
+The separate app folder contains the application’s source code—components, pages, logic, and styles—that gets processed by the framework (Next.js) before being served. This separation ensures a clear distinction between raw static files and dynamic, interactive application code.

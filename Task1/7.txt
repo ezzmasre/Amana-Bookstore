@@ -1,0 +1,1 @@
+This application generates unique URLs for each individual book (like /book/1, /book/2) using Next.js dynamic route folders. The folder structure that makes this possible is The [id] folder tells Next.js to create a dynamic route, so when a user visits /book/1, the page.tsx inside [id] loads that book’s data from data/books.ts and displays it.
