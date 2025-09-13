@@ -1,9 +1,7 @@
-// src/app/components/Navbar.tsx
 'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
 import { useState, useEffect } from 'react';
 import { CartItem } from '../types';
 
@@ -15,18 +13,20 @@ const Navbar: React.FC = () => {
     // This function updates the cart count from localStorage.
     // It's designed to run on the client side only.
     const updateCartCount = () => {
-      const storedCart = localStorage.getItem('cart');
-      if (storedCart) {
-        try {
-          const cart: CartItem[] = JSON.parse(storedCart);
-          const count = cart.reduce((total, item) => total + item.quantity, 0);
-          setCartItemCount(count);
-        } catch (error) {
-          console.error('Failed to parse cart from localStorage', error);
+      if (typeof window !== 'undefined') {
+        const storedCart = localStorage.getItem('cart');
+        if (storedCart) {
+          try {
+            const cart: CartItem[] = JSON.parse(storedCart);
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            setCartItemCount(count);
+          } catch (error) {
+            console.error('Failed to parse cart from localStorage', error);
+            setCartItemCount(0);
+          }
+        } else {
           setCartItemCount(0);
         }
-      } else {
-        setCartItemCount(0);
       }
     };
 
@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
       window.removeEventListener('cartUpdated', updateCartCount);
     };
   }, []);
-  
+
   return (
     <nav className="bg-white shadow-md fixed w-full top-0 z-10">
       <div className="container mx-auto px-6 py-3 flex justify-between items-center">
