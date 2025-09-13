@@ -1,4 +1,3 @@
-// src/app/components/BookCard.tsx
 'use client';
 
 import React, { useState } from 'react';
@@ -82,10 +81,10 @@ const BookCard: React.FC<BookCardProps> = ({ book, onAddToCart }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition-transform duration-300">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
       {/* Book Cover - Clickable */}
       <Link href={`/book/${book.id}`} className="block cursor-pointer">
-        <div className="relative h-64 w-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-colors duration-200">
+        <div className="relative h-64 w-full bg-gray-200 flex items-center justify-center hover:bg-gray-300 transition-all duration-300 transform hover:scale-105">
           {/* Book Icon Placeholder */}
           <div className="text-6xl text-gray-400">📚</div>
         </div>
@@ -94,18 +93,20 @@ const BookCard: React.FC<BookCardProps> = ({ book, onAddToCart }) => {
       {/* Book Information */}
       <div className="p-4">
         <Link href={`/book/${book.id}`} className="block cursor-pointer">
-          <h3 className="text-lg font-semibold text-gray-800 truncate hover:text-blue-600 transition-colors duration-200">{book.title}</h3>
-          <p className="text-sm text-gray-600 mt-1">by {book.author}</p>
+          <h3 className="text-lg font-semibold text-gray-800 truncate hover:text-blue-600 transition-colors duration-200 text-center">
+            {book.title}
+          </h3>
+          <p className="text-sm text-gray-600 mt-1 text-center">by {book.author}</p>
         </Link>
         
-        <div className="flex items-center mt-2">
+        <div className="flex items-center mt-2 justify-center">
           {renderStars(book.rating)}
           <span className="text-xs text-gray-500 ml-2">({book.reviewCount} reviews)</span>
         </div>
         
         <div className="mt-2">
           {book.genre.slice(0, 2).map((g) => (
-            <span key={g} className="inline-block bg-gray-200 rounded-full px-2 py-1 text-xs font-semibold text-gray-700 mr-2 mb-2">
+            <span key={g} className="inline-block bg-gray-200 rounded-full px-3 py-2 text-xs font-semibold text-gray-700 mr-2 mb-2">
               {g}
             </span>
           ))}
@@ -114,57 +115,52 @@ const BookCard: React.FC<BookCardProps> = ({ book, onAddToCart }) => {
           )}
         </div>
         
-        <div className="flex items-center justify-between mt-3">
-          <p className="text-xl font-bold text-gray-900">${book.price.toFixed(2)}</p>
+        <div className="mt-3 flex items-center justify-between">
+          <p className="text-xl font-bold text-gray-900">{`$${book.price.toFixed(2)}`}</p>
           {!book.inStock && (
             <span className="text-xs text-red-600 font-medium">Out of Stock</span>
           )}
         </div>
-        
-        {/* Action Buttons */}
-        <div className="flex gap-2 mt-4">
-          <Link href={`/book/${book.id}`} className="flex-1 cursor-pointer">
-            <button className="w-full px-3 py-2 text-sm border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors duration-200 cursor-pointer">
-              View Details
-            </button>
-          </Link>
-          
-          <button
-            onClick={handleAddToCart}
-            disabled={!book.inStock || isAddingToCart}
-            className={`flex-1 px-3 py-2 text-sm rounded-md transition-colors duration-200 ${
-              !book.inStock
-                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                : showSuccess
-                ? 'bg-green-600 text-white cursor-pointer'
-                : isAddingToCart
-                ? 'bg-blue-400 text-white cursor-wait'
-                : 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'
-            }`}
-          >
-            {showSuccess ? (
-              <span className="flex items-center justify-center gap-1">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                Added!
-              </span>
-            ) : isAddingToCart ? (
-              <span className="flex items-center justify-center gap-1">
-                <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Adding...
-              </span>
-            ) : (
-              'Add to Cart'
-            )}
-          </button>
-        </div>
+      </div>
+      
+      {/* Add to Cart Button */}
+      <div className="p-4 pt-2 pb-4">
+        <button
+          onClick={handleAddToCart}
+          disabled={!book.inStock || isAddingToCart}
+          className={`flex-1 px-3 py-2 text-sm rounded-md transition-all duration-200 ${
+            !book.inStock
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : showSuccess
+              ? 'bg-gradient-to-r from-green-400 to-green-600 text-white cursor-pointer'
+              : isAddingToCart
+              ? 'bg-blue-400 text-white cursor-wait'
+              : 'bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:bg-gradient-to-r from-blue-700 to-blue-800 cursor-pointer'
+          }`}
+        >
+          {showSuccess ? (
+            <span className="flex items-center justify-center gap-1">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              Added!
+            </span>
+          ) : isAddingToCart ? (
+            <span className="flex items-center justify-center gap-1">
+              <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Adding...
+            </span>
+          ) : (
+            'Add to Cart'
+          )}
+        </button>
       </div>
     </div>
   );
 };
 
 export default BookCard;
+

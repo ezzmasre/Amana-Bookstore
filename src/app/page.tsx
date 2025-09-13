@@ -9,7 +9,7 @@ export default function HomePage() {
   // Simple cart handler for demo purposes
   const handleAddToCart = (bookId: string) => {
     console.log(`Added book ${bookId} to cart`);
-    // Here you would typically dispatch to a cart state or call an API
+    // Here you would tSypically dispatch to a cart state or call an API
   };
 
   return (
